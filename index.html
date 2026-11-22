@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bonny's Sourdough</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Fresh sourdough bread and cookies, baked in Caledonia, Michigan. Order online for local pickup.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: one column order sheet. Hero band -> menu cards with steppers -> order form with live ticket -> about Bonny. */
+:root {
+  --bg: #f6f4ef;          /* flour */
+  --surface: #ffffff;
+  --ink: #2b2118;         /* dark crust */
+  --muted: #6e6257;
+  --line: #e3ddd2;
+  --crust: #8a4b1f;       /* baked crust brown, accent */
+  --crust-ink: #ffffff;
+  --lake: #2f5d73;        /* Lake Michigan blue, secondary */
+  --lake-soft: #e4edf1;
+  --ok: #2f7a4a;
+  --hero-bg: #2b2118;
+  --hero-ink: #f6efe3;
+  --hero-muted: #cdbfa9;
+  --font-display: "Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
+  --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --radius: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1b1713; --surface: #25201a; --ink: #f1e9dc; --muted: #b3a593; --line: #3a322a;
+    --crust: #d98b4e; --crust-ink: #1b1713; --lake: #8fc0d6; --lake-soft: #20303a; --ok: #6cc28c;
+    --hero-bg: #120f0c; --hero-ink: #f6efe3; --hero-muted: #b8a993;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1b1713; --surface: #25201a; --ink: #f1e9dc; --muted: #b3a593; --line: #3a322a;
+  --crust: #d98b4e; --crust-ink: #1b1713; --lake: #8fc0d6; --lake-soft: #20303a; --ok: #6cc28c;
+  --hero-bg: #120f0c; --hero-ink: #f6efe3; --hero-muted: #b8a993;
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.55;
+}
+img { max-width: 100%; display: block; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.1; text-wrap: balance; margin: 0; }
+.wrap {
+  max-width: 1040px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.eyebrow { font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+
+/* Hero */
+.hero {
+  background: var(--hero-bg); color: var(--hero-ink);
+  margin-top: calc(-1 * env(safe-area-inset-top, 0px));
+  padding-top: calc(env(safe-area-inset-top, 0px) + 3rem);
+  padding-bottom: 3rem; position: relative; overflow: hidden;
+}
+.hero::after { /* scoring marks, like the slash on a loaf */
+  content: ""; position: absolute; right: -60px; top: -40px; width: 340px; height: 340px; border-radius: 50%;
+  background:
+    linear-gradient(115deg, transparent 46%, rgba(246,239,227,.10) 47%, rgba(246,239,227,.10) 50%, transparent 51%),
+    linear-gradient(115deg, transparent 30%, rgba(246,239,227,.07) 31%, rgba(246,239,227,.07) 33%, transparent 34%),
+    linear-gradient(115deg, transparent 63%, rgba(246,239,227,.07) 64%, rgba(246,239,227,.07) 66%, transparent 67%),
+    radial-gradient(circle, #8a4b1f 0%, #5c3214 70%);
+  opacity: .55; pointer-events: none;
+}
+.hero .wrap { position: relative; z-index: 1; display: grid; gap: 1rem; }
+.hero .eyebrow { color: var(--hero-muted); }
+.hero h1 { font-size: clamp(2.6rem, 8vw, 4.6rem); font-weight: 800; letter-spacing: -.02em; }
+.hero h1 span { color: #e7a56b; }
+.hero p { max-width: 34rem; color: var(--hero-muted); font-size: 1.1rem; margin: 0; }
+.hero .cta-row { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: .5rem; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  font: 700 1rem var(--font-body); border: 0; border-radius: 999px; padding: .85rem 1.4rem;
+  background: var(--crust); color: var(--crust-ink); text-decoration: none; cursor: pointer;
+}
+.hero .btn { background: #e7a56b; color: #2b2118; }
+.btn:hover { filter: brightness(1.06); }
+.btn:focus-visible, .step button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline: 3px solid var(--lake); outline-offset: 2px;
+}
+.btn.ghost { background: transparent; color: inherit; box-shadow: inset 0 0 0 2px currentColor; }
+.badges { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .5rem; }
+.badge { font-size: .85rem; padding: .3rem .7rem; border-radius: 999px; background: rgba(246,239,227,.1); color: var(--hero-ink); }
+
+section { padding-block: 3rem; }
+.section-head { display: grid; gap: .35rem; margin-bottom: 1.5rem; }
+.section-head .eyebrow { color: var(--crust); }
+.section-head h2 { font-size: clamp(1.8rem, 5vw, 2.5rem); }
+.section-head p { margin: 0; color: var(--muted); max-width: 40rem; }
+
+/* Menu */
+.cat-title { font-size: 1.3rem; margin: 1.75rem 0 .9rem; display: flex; align-items: baseline; gap: .6rem; }
+.cat-title small { font-family: var(--font-body); font-size: .9rem; color: var(--muted); font-weight: 500; }
+.menu { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
+.item {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 1.1rem; display: grid; grid-template-rows: auto 1fr auto; gap: .6rem; min-width: 0;
+}
+.item.selected { border-color: var(--crust); box-shadow: 0 0 0 1px var(--crust); }
+.item-top { display: flex; justify-content: space-between; gap: .75rem; align-items: baseline; }
+.item h4 { margin: 0; font-size: 1.08rem; font-weight: 700; }
+.price { font-weight: 700; color: var(--crust); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.item p { margin: 0; color: var(--muted); font-size: .94rem; }
+.item-foot { display: flex; justify-content: space-between; align-items: center; gap: .5rem; }
+.unit { font-size: .82rem; color: var(--muted); }
+.step { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+.step button {
+  width: 2.4rem; height: 2.4rem; border: 0; background: transparent; color: var(--ink);
+  font-size: 1.25rem; font-weight: 700; cursor: pointer;
+}
+.step button:hover { background: var(--lake-soft); }
+.step output { min-width: 1.8rem; text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* Order */
+.order-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 1.5rem; align-items: start; }
+@media (max-width: 760px) { .order-grid { grid-template-columns: minmax(0, 1fr); } }
+form { display: grid; gap: 1rem; }
+.field { display: grid; gap: .35rem; }
+label { font-weight: 600; font-size: .95rem; }
+.hint { font-size: .85rem; color: var(--muted); }
+input, textarea, select {
+  font: inherit; color: var(--ink); background: var(--surface);
+  border: 1px solid var(--line); border-radius: 10px; padding: .75rem .85rem; width: 100%;
+}
+textarea { min-height: 5.5rem; resize: vertical; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 480px) { .row2 { grid-template-columns: 1fr; } }
+.error { color: #b3261e; font-size: .88rem; font-weight: 600; }
+:root[data-theme="dark"] .error { color: #ff8a80; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .error { color: #ff8a80; } }
+
+.ticket {
+  background: var(--surface); border: 1px dashed var(--muted); border-radius: var(--radius);
+  padding: 1.25rem; display: grid; gap: .75rem; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 1rem);
+}
+.ticket h3 { font-size: 1.15rem; }
+.ticket ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .4rem; }
+.ticket li { display: flex; justify-content: space-between; gap: 1rem; font-variant-numeric: tabular-nums; }
+.ticket .empty { color: var(--muted); font-size: .95rem; }
+.total { display: flex; justify-content: space-between; border-top: 1px solid var(--line); padding-top: .75rem; font-weight: 800; font-size: 1.15rem; font-variant-numeric: tabular-nums; }
+.pay-note { font-size: .85rem; color: var(--muted); margin: 0; }
+
+/* Confirmation */
+.confirm {
+  background: var(--lake-soft); border-radius: var(--radius); padding: 1.25rem; display: grid; gap: .9rem;
+}
+.confirm h3 { color: var(--lake); font-size: 1.3rem; }
+.confirm p { margin: 0; }
+.confirm pre {
+  white-space: pre-wrap; word-break: break-word; margin: 0; font: .92rem/1.5 var(--font-body);
+  background: var(--surface); border-radius: 10px; padding: .9rem; border: 1px solid var(--line);
+}
+.confirm .actions { display: flex; flex-wrap: wrap; gap: .6rem; }
+.confirm .btn.lake { background: var(--lake); color: var(--bg); }
+.contact-line { font-size: .92rem; color: var(--muted); }
+.contact-line strong { color: var(--ink); user-select: all; }
+
+/* About */
+.about { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 2rem; align-items: center; }
+@media (max-width: 760px) { .about { grid-template-columns: minmax(0, 1fr); } }
+.about img { border-radius: var(--radius); width: 100%; height: auto; }
+.about-text { display: grid; gap: .9rem; }
+.about-text p { margin: 0; max-width: 38rem; }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .75rem; }
+.fact { border-top: 2px solid var(--crust); padding-top: .5rem; }
+.fact b { display: block; font-family: var(--font-display); font-size: 1.05rem; }
+.fact span { font-size: .9rem; color: var(--muted); }
+
+footer { border-top: 1px solid var(--line); padding-block: 2rem; color: var(--muted); font-size: .9rem; }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; }
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+  .item { transition: border-color .15s, box-shadow .15s; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Caledonia, Michigan · Home bakery</div>
+    <h1>Bonny's <span>Sourdough</span></h1>
+    <p>Naturally leavened bread and sourdough cookies, baked in small batches for West Michigan neighbors. Pick what you want, choose a pickup day, and Bonny gets your order.</p>
+    <div class="cta-row">
+      <a class="btn" href="#menu">Start an order</a>
+      <a class="btn ghost" href="#about">Meet Bonny</a>
+    </div>
+    <div class="badges">
+      <span class="badge">Local pickup in Caledonia</span>
+      <span class="badge">Order 2+ days ahead</span>
+      <span class="badge">Pay at pickup</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section id="menu">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Step 1</div>
+        <h2>Pick your bake</h2>
+        <p>Tap + to add items. Every loaf starts with a long, slow ferment, so give Bonny at least two days' notice.</p>
+      </div>
+      <div id="menu-list"></div>
+    </div>
+  </section>
+
+  <section id="order" style="padding-top:0">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Step 2</div>
+        <h2>Your details &amp; pickup</h2>
+      </div>
+      <div class="order-grid">
+        <div>
+          <form id="order-form" novalidate>
+            <div class="field">
+              <label for="name">Your name</label>
+              <input id="name" name="name" autocomplete="name" required placeholder="First and last name">
+            </div>
+            <div class="row2">
+              <div class="field">
+                <label for="phone">Phone number</label>
+                <input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required placeholder="(616) 555-0100">
+              </div>
+              <div class="field">
+                <label for="pickup">Pickup date</label>
+                <input id="pickup" name="pickup" type="date" required>
+              </div>
+            </div>
+            <div class="field">
+              <label for="time">Preferred pickup time</label>
+              <select id="time" name="time">
+                <option>Morning (9am – 12pm)</option>
+                <option>Afternoon (12pm – 4pm)</option>
+                <option selected>Evening (4pm – 7pm)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="notes">Notes for Bonny <span class="hint">(optional)</span></label>
+              <textarea id="notes" name="notes" placeholder="Sliced? Gift? Allergies?"></textarea>
+            </div>
+            <div id="form-error" class="error" role="alert" hidden></div>
+            <button class="btn" type="submit">Send order to Bonny</button>
+            <p class="hint">Bonny will text you to confirm your order and the pickup address in Caledonia.</p>
+          </form>
+          <div id="confirm" class="confirm" hidden aria-live="polite"></div>
+        </div>
+
+        <aside class="ticket" aria-label="Order summary">
+          <h3>Your order</h3>
+          <ul id="ticket-list"></ul>
+          <div class="total"><span>Total</span><span id="ticket-total">$0.00</span></div>
+          <p class="pay-note">Pay at pickup with cash or Venmo.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap about">
+      <img src="images/bonny-family.jpg" alt="Bonny and family on the Lake Michigan shore at Grand Haven, with the red lighthouse behind them" width="1000" height="1000" loading="lazy">
+      <div class="about-text">
+        <div class="eyebrow" style="color:var(--crust)">Meet the baker</div>
+        <h2>Baked in a Caledonia family kitchen</h2>
+        <p>Bonny bakes at home in Caledonia with a sourdough starter that gets fed every single day. On days off from shaping loaves, you'll find the whole family on the Lake Michigan shore.</p>
+        <p>Every order is made fresh for you, so there's no shelf sitting and no preservatives. Just flour, water, salt, time, and a little butter and chocolate in the cookies.</p>
+        <div class="facts">
+          <div class="fact"><b>24–36 hrs</b><span>Fermentation for every loaf</span></div>
+          <div class="fact"><b>3 ingredients</b><span>Flour, water, salt in the country loaf</span></div>
+          <div class="fact"><b>West Michigan</b><span>Pickup in Caledonia, MI 49316</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year">2026</span> Bonny's Sourdough · Caledonia, MI</span>
+    <span>Questions? Text Bonny at <strong id="footer-phone"></strong></span>
+  </div>
+</footer>
+
+<script>
+/* ===================== EDIT HERE =====================
+   Bonny's contact info and the menu. Change names,
+   descriptions and prices freely; the page updates itself. */
+const CONFIG = {
+  bonnyPhone: "(616) 555-0142",        // TODO: Bonny's real cell number (orders are texted here)
+  bonnyEmail: "",                      // optional: Bonny's email for an "Email it" button
+  formspreeEndpoint: "",               // optional: e.g. "https://formspree.io/f/abcdwxyz" to send orders automatically
+  minDaysAhead: 2
+};
+
+const MENU = [
+  { cat: "Sourdough Bread", note: "One loaf, about 2 lb", items: [
+    { id: "country",   name: "Classic Country Loaf",       price: 10, unit: "loaf",  desc: "Crackly crust, open crumb, mild tang. The everyday loaf." },
+    { id: "jalapeno",  name: "Cheddar Jalapeño",           price: 12, unit: "loaf",  desc: "Sharp cheddar and fresh jalapeño folded through." },
+    { id: "rosemary",  name: "Rosemary Garlic",            price: 12, unit: "loaf",  desc: "Roasted garlic and fresh rosemary. Great with soup." },
+    { id: "cinnamon",  name: "Cinnamon Raisin",            price: 12, unit: "loaf",  desc: "Cinnamon swirl and plump raisins. Makes the best toast." },
+    { id: "sandwich",  name: "Sandwich Sourdough",         price: 9,  unit: "loaf",  desc: "Soft pan loaf, easy to slice for lunches." }
+  ]},
+  { cat: "Sourdough Cookies", note: "Sold by the half dozen", items: [
+    { id: "choc",      name: "Brown Butter Chocolate Chip", price: 12, unit: "6 cookies", desc: "Brown butter, dark chocolate, flaky sea salt on top." },
+    { id: "snicker",   name: "Sourdough Snickerdoodle",     price: 10, unit: "6 cookies", desc: "Soft and chewy with a cinnamon-sugar coat." },
+    { id: "monster",   name: "Monster Cookie",              price: 12, unit: "6 cookies", desc: "Oats, peanut butter, M&Ms and chocolate chips." },
+    { id: "sugar",     name: "Frosted Sugar Cookie",        price: 12, unit: "6 cookies", desc: "Thick, soft, with buttercream frosting." }
+  ]}
+];
+/* ===================================================== */
+
+const qty = {};
+const money = n => "$" + n.toFixed(2);
+const allItems = MENU.flatMap(c => c.items);
+
+function renderMenu() {
+  const root = document.getElementById("menu-list");
+  root.innerHTML = MENU.map(c => `
+    <h3 class="cat-title">${c.cat} <small>${c.note}</small></h3>
+    <div class="menu">
+      ${c.items.map(i => `
+        <article class="item" id="item-${i.id}">
+          <div class="item-top"><h4>${i.name}</h4><span class="price">${money(i.price)}</span></div>
+          <p>${i.desc}</p>
+          <div class="item-foot">
+            <span class="unit">per ${i.unit}</span>
+            <div class="step" role="group" aria-label="Quantity of ${i.name}">
+              <button type="button" data-id="${i.id}" data-d="-1" aria-label="Remove one ${i.name}">−</button>
+              <output id="q-${i.id}">0</output>
+              <button type="button" data-id="${i.id}" data-d="1" aria-label="Add one ${i.name}">+</button>
+            </div>
+          </div>
+        </article>`).join("")}
+    </div>`).join("");
+  root.addEventListener("click", e => {
+    const b = e.target.closest("button[data-id]");
+    if (!b) return;
+    const id = b.dataset.id;
+    qty[id] = Math.max(0, Math.min(24, (qty[id] || 0) + Number(b.dataset.d)));
+    document.getElementById("q-" + id).textContent = qty[id];
+    document.getElementById("item-" + id).classList.toggle("selected", qty[id] > 0);
+    renderTicket();
+  });
+}
+
+function chosen() { return allItems.filter(i => qty[i.id] > 0).map(i => ({ ...i, q: qty[i.id] })); }
+
+function renderTicket() {
+  const list = chosen();
+  const ul = document.getElementById("ticket-list");
+  ul.innerHTML = list.length
+    ? list.map(i => `<li><span>${i.q} × ${i.name}</span><span>${money(i.q * i.price)}</span></li>`).join("")
+    : `<li class="empty">Nothing yet. Add bread or cookies above.</li>`;
+  document.getElementById("ticket-total").textContent = money(list.reduce((s, i) => s + i.q * i.price, 0));
+}
+
+function setupDate() {
+  const d = new Date(); d.setDate(d.getDate() + CONFIG.minDaysAhead);
+  const iso = x => new Date(x.getTime() - x.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+  const el = document.getElementById("pickup");
+  el.min = iso(d);
+  const max = new Date(); max.setDate(max.getDate() + 60); el.max = iso(max);
+  el.value = iso(d);
+}
+
+function prettyDate(v) {
+  const [y, m, d] = v.split("-").map(Number);
+  return new Date(y, m - 1, d).toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
+}
+
+function digits(p) { return p.replace(/\D/g, ""); }
+
+function buildMessage(f) {
+  const list = chosen();
+  const total = list.reduce((s, i) => s + i.q * i.price, 0);
+  return [
+    "New order for Bonny's Sourdough",
+    "",
+    "Name: " + f.name,
+    "Phone: " + f.phone,
+    "Pickup: " + prettyDate(f.pickup) + ", " + f.time,
+    "",
+    ...list.map(i => `${i.q} x ${i.name} (${money(i.q * i.price)})`),
+    "Total: " + money(total),
+    ...(f.notes ? ["", "Notes: " + f.notes] : [])
+  ].join("\n");
+}
+
+function escapeHtml(s) { return s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+
+async function onSubmit(e) {
+  e.preventDefault();
+  const err = document.getElementById("form-error");
+  const f = {
+    name: document.getElementById("name").value.trim(),
+    phone: document.getElementById("phone").value.trim(),
+    pickup: document.getElementById("pickup").value,
+    time: document.getElementById("time").value,
+    notes: document.getElementById("notes").value.trim()
+  };
+  const pickupEl = document.getElementById("pickup");
+  let problem = "";
+  if (!chosen().length) problem = "Add at least one item from the menu above.";
+  else if (!f.name) problem = "Enter your name so Bonny knows whose order it is.";
+  else if (digits(f.phone).length < 10) problem = "Enter a 10-digit phone number so Bonny can text you.";
+  else if (!f.pickup || f.pickup < pickupEl.min) problem = `Pick a date at least ${CONFIG.minDaysAhead} days from today.`;
+  if (problem) { err.textContent = problem; err.hidden = false; return; }
+  err.hidden = true;
+
+  const msg = buildMessage(f);
+  let sentOnline = false;
+  if (CONFIG.formspreeEndpoint) {
+    try {
+      const r = await fetch(CONFIG.formspreeEndpoint, {
+        method: "POST", headers: { "Accept": "application/json", "Content-Type": "application/json" },
+        body: JSON.stringify({ ...f, order: msg, _subject: "New order from " + f.name })
+      });
+      sentOnline = r.ok;
+    } catch (_) { sentOnline = false; }
+  }
+
+  const phoneDigits = digits(CONFIG.bonnyPhone);
+  const sms = `sms:+1${phoneDigits.slice(-10)}?&body=${encodeURIComponent(msg)}`;
+  const mail = CONFIG.bonnyEmail ? `mailto:${CONFIG.bonnyEmail}?subject=${encodeURIComponent("Sourdough order: " + f.name)}&body=${encodeURIComponent(msg)}` : "";
+
+  const box = document.getElementById("confirm");
+  box.innerHTML = sentOnline ? `
+      <h3>Order sent to Bonny</h3>
+      <p>Thanks, ${escapeHtml(f.name.split(" ")[0])}! Bonny will text you at ${escapeHtml(f.phone)} to confirm.</p>
+      <pre>${escapeHtml(msg)}</pre>
+      <div class="actions"><button class="btn ghost" type="button" id="again">Start a new order</button></div>`
+    : `
+      <h3>One last tap</h3>
+      <p>Tap <b>Text my order to Bonny</b>. Your phone opens a text with everything filled in. Just hit send.</p>
+      <pre id="msg-text">${escapeHtml(msg)}</pre>
+      <div class="actions">
+        <a class="btn lake" href="${sms}">Text my order to Bonny</a>
+        ${mail ? `<a class="btn ghost" href="${mail}">Email it instead</a>` : ""}
+        <button class="btn ghost" type="button" id="copy">Copy order</button>
+      </div>
+      <p class="contact-line">Texting doesn't open? Copy the order and send it to <strong>${escapeHtml(CONFIG.bonnyPhone)}</strong>.</p>
+      <button class="btn ghost" type="button" id="again">Edit order</button>`;
+  box.hidden = false;
+  document.getElementById("order-form").hidden = true;
+  box.scrollIntoView({ block: "start" });
+
+  const copy = document.getElementById("copy");
+  if (copy) copy.addEventListener("click", () => {
+    navigator.clipboard.writeText(msg).then(() => { copy.textContent = "Copied"; })
+      .catch(() => {
+        const r = document.createRange(); r.selectNodeContents(document.getElementById("msg-text"));
+        const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+        copy.textContent = "Selected. Press copy";
+      });
+  });
+  document.getElementById("again").addEventListener("click", () => {
+    box.hidden = true; document.getElementById("order-form").hidden = false;
+  });
+}
+
+renderMenu();
+renderTicket();
+setupDate();
+document.getElementById("order-form").addEventListener("submit", onSubmit);
+document.getElementById("footer-phone").textContent = CONFIG.bonnyPhone;
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
