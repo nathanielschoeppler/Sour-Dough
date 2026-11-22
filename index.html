@@ -195,10 +195,10 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     <div class="hero-text">
       <div class="eyebrow pill-tag">Caledonia, MI · Home bakery</div>
       <h1>Bonny's <span>Sourdough</span></h1>
-      <p>Fresh sourdough bread and cookies, baked in small batches for West Michigan neighbors. Pick your favorites, choose a pickup day, and Bonny gets your order.</p>
+      <p>Fresh sourdough bread and cookies, baked in small batches for West Michigan neighbors. Pick your favorites, choose a pickup day, and your order comes straight to me.</p>
       <div class="cta-row">
         <a class="btn" href="#menu">Start an order</a>
-        <a class="btn ghost" href="#about">Meet Bonny</a>
+        <a class="btn ghost" href="#about">Meet the baker</a>
       </div>
       <div class="badges">
         <span class="badge">Pickup in Caledonia</span>
@@ -208,7 +208,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     </div>
     <figure class="hero-photo" style="margin:0">
       <img src="images/bonny-family.jpg" alt="Bonny and family on the Lake Michigan shore at Grand Haven, with the red lighthouse behind them" width="1000" height="1000">
-      <figcaption class="sticker">Baked with love<small>by Bonny &amp; family</small></figcaption>
+      <figcaption class="sticker">Hi, I'm Bonny!<small>That's my family and me</small></figcaption>
     </figure>
   </div>
 </header>
@@ -219,7 +219,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       <div class="section-head">
         <div class="eyebrow">Step 1</div>
         <h2>Pick your bake</h2>
-        <p>Tap + to add items. Every loaf starts with a long, slow ferment, so give Bonny at least two days' notice.</p>
+        <p>Tap + to add items. Every loaf starts with a long, slow ferment, so please give me at least two days' notice.</p>
       </div>
       <div id="menu-list"></div>
     </div>
@@ -257,12 +257,12 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
               </select>
             </div>
             <div class="field">
-              <label for="notes">Notes for Bonny <span class="hint">(optional)</span></label>
+              <label for="notes">Notes for me <span class="hint">(optional)</span></label>
               <textarea id="notes" name="notes" placeholder="Sliced? Gift? Allergies?"></textarea>
             </div>
             <div id="form-error" class="error" role="alert" hidden></div>
-            <button class="btn" type="submit">Send order to Bonny</button>
-            <p class="hint">Bonny will text you to confirm your order and the pickup address in Caledonia.</p>
+            <button class="btn" type="submit">Send my order</button>
+            <p class="hint">I'll text you to confirm your order and send the pickup address in Caledonia.</p>
           </form>
           <div id="confirm" class="confirm" hidden aria-live="polite"></div>
         </div>
@@ -279,10 +279,10 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 
   <section id="about">
     <div class="wrap about-text">
-      <div class="eyebrow" style="color:var(--crust)">Meet the baker</div>
-      <h2 style="font-size:clamp(1.8rem,5vw,2.5rem)">Baked in a Caledonia family kitchen</h2>
-      <p>Bonny bakes at home in Caledonia with a sourdough starter that gets fed every single day. On days off from shaping loaves, you'll find the whole family on the Lake Michigan shore.</p>
-      <p>Every order is made fresh for you, so there's no shelf sitting and no preservatives. Just flour, water, salt, time, and a little butter and chocolate in the cookies.</p>
+      <div class="eyebrow" style="color:var(--crust)">Hi, I'm Bonny</div>
+      <h2 style="font-size:clamp(1.8rem,5vw,2.5rem)">Baked in my Caledonia family kitchen</h2>
+      <p>I bake at home in Caledonia with a sourdough starter I feed every single day. When I'm not shaping loaves, you'll find my family and me on the Lake Michigan shore.</p>
+      <p>I make every order fresh just for you, so there's no shelf sitting and no preservatives. Just flour, water, salt, time, and a little butter and chocolate in the cookies.</p>
       <div class="facts">
         <div class="fact"><b>24–36 hrs</b><span>Fermentation for every loaf</span></div>
         <div class="fact"><b>3 ingredients</b><span>Flour, water, salt in the country loaf</span></div>
@@ -295,7 +295,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 <footer>
   <div class="wrap">
     <span>© <span id="year">2026</span> Bonny's Sourdough · Caledonia, MI</span>
-    <span>Questions? Text Bonny at <strong id="footer-phone"></strong></span>
+    <span>Questions? Text me at <strong id="footer-phone"></strong></span>
   </div>
 </footer>
 
@@ -419,8 +419,8 @@ async function onSubmit(e) {
   const pickupEl = document.getElementById("pickup");
   let problem = "";
   if (!chosen().length) problem = "Add at least one item from the menu above.";
-  else if (!f.name) problem = "Enter your name so Bonny knows whose order it is.";
-  else if (digits(f.phone).length < 10) problem = "Enter a 10-digit phone number so Bonny can text you.";
+  else if (!f.name) problem = "Enter your name so I know whose order it is.";
+  else if (digits(f.phone).length < 10) problem = "Enter a 10-digit phone number so I can text you.";
   else if (!f.pickup || f.pickup < pickupEl.min) problem = `Pick a date at least ${CONFIG.minDaysAhead} days from today.`;
   if (problem) { err.textContent = problem; err.hidden = false; return; }
   err.hidden = true;
@@ -443,20 +443,20 @@ async function onSubmit(e) {
 
   const box = document.getElementById("confirm");
   box.innerHTML = sentOnline ? `
-      <h3>Order sent to Bonny</h3>
-      <p>Thanks, ${escapeHtml(f.name.split(" ")[0])}! Bonny will text you at ${escapeHtml(f.phone)} to confirm.</p>
+      <h3>Order sent!</h3>
+      <p>Thanks, ${escapeHtml(f.name.split(" ")[0])}! I'll text you at ${escapeHtml(f.phone)} to confirm.</p>
       <pre>${escapeHtml(msg)}</pre>
       <div class="actions"><button class="btn ghost" type="button" id="again">Start a new order</button></div>`
     : `
       <h3>One last tap</h3>
-      <p>Tap <b>Text my order to Bonny</b>. Your phone opens a text with everything filled in. Just hit send.</p>
+      <p>Tap <b>Text my order to Bonny</b>. Your phone opens a text to me with everything filled in. Just hit send.</p>
       <pre id="msg-text">${escapeHtml(msg)}</pre>
       <div class="actions">
         <a class="btn lake" href="${sms}">Text my order to Bonny</a>
         ${mail ? `<a class="btn ghost" href="${mail}">Email it instead</a>` : ""}
         <button class="btn ghost" type="button" id="copy">Copy order</button>
       </div>
-      <p class="contact-line">Texting doesn't open? Copy the order and send it to <strong>${escapeHtml(CONFIG.bonnyPhone)}</strong>.</p>
+      <p class="contact-line">Texting doesn't open? Copy the order and text it to me at <strong>${escapeHtml(CONFIG.bonnyPhone)}</strong>.</p>
       <button class="btn ghost" type="button" id="again">Edit order</button>`;
   box.hidden = false;
   document.getElementById("order-form").hidden = true;
