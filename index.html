@@ -10,37 +10,36 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap">
 <style>
-/* Layout: one column order sheet. Hero band -> menu cards with steppers -> order form with live ticket -> about Bonny. */
+/* Layout: bright split hero (headline + family photo) -> menu cards with steppers -> order form with live ticket -> about. */
 :root {
-  --bg: #f6f4ef;          /* flour */
+  --bg: #ffffff;
+  --band: #fff6ec;        /* warm peach band */
   --surface: #ffffff;
-  --ink: #2b2118;         /* dark crust */
-  --muted: #6e6257;
-  --line: #e3ddd2;
-  --crust: #8a4b1f;       /* baked crust brown, accent */
+  --ink: #1f1a17;
+  --muted: #6b625b;
+  --line: #f0e8de;
+  --crust: #e8742c;       /* bright golden crust, accent */
   --crust-ink: #ffffff;
-  --lake: #2f5d73;        /* Lake Michigan blue, secondary */
-  --lake-soft: #e4edf1;
-  --ok: #2f7a4a;
-  --hero-bg: #2b2118;
-  --hero-ink: #f6efe3;
-  --hero-muted: #cdbfa9;
+  --crust-soft: #ffe9d6;
+  --lake: #1a86b3;        /* Lake Michigan blue, secondary */
+  --lake-soft: #e5f4fb;
+  --shadow: 0 10px 30px rgba(120, 70, 20, .10);
   --font-display: "Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
   --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --radius: 14px;
+  --radius: 20px;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #1b1713; --surface: #25201a; --ink: #f1e9dc; --muted: #b3a593; --line: #3a322a;
-    --crust: #d98b4e; --crust-ink: #1b1713; --lake: #8fc0d6; --lake-soft: #20303a; --ok: #6cc28c;
-    --hero-bg: #120f0c; --hero-ink: #f6efe3; --hero-muted: #b8a993;
+    --bg: #171412; --band: #211b16; --surface: #221d19; --ink: #f5eee6; --muted: #b5a99c; --line: #352d26;
+    --crust: #f59a52; --crust-ink: #1a1410; --crust-soft: #3a2616; --lake: #7cc6e6; --lake-soft: #1b2d36;
+    --shadow: 0 10px 30px rgba(0, 0, 0, .35);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #1b1713; --surface: #25201a; --ink: #f1e9dc; --muted: #b3a593; --line: #3a322a;
-  --crust: #d98b4e; --crust-ink: #1b1713; --lake: #8fc0d6; --lake-soft: #20303a; --ok: #6cc28c;
-  --hero-bg: #120f0c; --hero-ink: #f6efe3; --hero-muted: #b8a993;
+  --bg: #171412; --band: #211b16; --surface: #221d19; --ink: #f5eee6; --muted: #b5a99c; --line: #352d26;
+  --crust: #f59a52; --crust-ink: #1a1410; --crust-soft: #3a2616; --lake: #7cc6e6; --lake-soft: #1b2d36;
+  --shadow: 0 10px 30px rgba(0, 0, 0, .35);
   color-scheme: dark;
 }
 *, *::before, *::after { box-sizing: border-box; }
@@ -61,39 +60,42 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.1; text-wrap: bala
 
 /* Hero */
 .hero {
-  background: var(--hero-bg); color: var(--hero-ink);
+  background: radial-gradient(120% 90% at 100% 0%, var(--lake-soft) 0%, transparent 55%), var(--band);
   margin-top: calc(-1 * env(safe-area-inset-top, 0px));
-  padding-top: calc(env(safe-area-inset-top, 0px) + 3rem);
-  padding-bottom: 3rem; position: relative; overflow: hidden;
+  padding-top: calc(env(safe-area-inset-top, 0px) + 2.5rem);
+  padding-bottom: 3.5rem;
 }
-.hero::after { /* scoring marks, like the slash on a loaf */
-  content: ""; position: absolute; right: -60px; top: -40px; width: 340px; height: 340px; border-radius: 50%;
-  background:
-    linear-gradient(115deg, transparent 46%, rgba(246,239,227,.10) 47%, rgba(246,239,227,.10) 50%, transparent 51%),
-    linear-gradient(115deg, transparent 30%, rgba(246,239,227,.07) 31%, rgba(246,239,227,.07) 33%, transparent 34%),
-    linear-gradient(115deg, transparent 63%, rgba(246,239,227,.07) 64%, rgba(246,239,227,.07) 66%, transparent 67%),
-    radial-gradient(circle, #8a4b1f 0%, #5c3214 70%);
-  opacity: .55; pointer-events: none;
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 2.5rem; align-items: center; }
+@media (max-width: 760px) { .hero .wrap { grid-template-columns: minmax(0, 1fr); gap: 2rem; } }
+.hero-text { display: grid; gap: 1.1rem; }
+.pill-tag { justify-self: start; background: var(--surface); color: var(--crust); box-shadow: var(--shadow); padding: .4rem .9rem; border-radius: 999px; }
+.hero h1 { font-size: clamp(2.8rem, 8vw, 5rem); font-weight: 800; letter-spacing: -.03em; }
+.hero h1 span { color: var(--crust); display: block; }
+.hero p { max-width: 32rem; color: var(--muted); font-size: 1.15rem; margin: 0; }
+.hero .cta-row { display: flex; flex-wrap: wrap; gap: .75rem; }
+.hero-photo { position: relative; max-width: 480px; justify-self: center; width: 100%; }
+.hero-photo img {
+  width: 100%; height: auto; border-radius: 28px; border: 6px solid var(--surface);
+  box-shadow: 0 24px 60px rgba(120, 70, 20, .22); transform: rotate(2deg);
 }
-.hero .wrap { position: relative; z-index: 1; display: grid; gap: 1rem; }
-.hero .eyebrow { color: var(--hero-muted); }
-.hero h1 { font-size: clamp(2.6rem, 8vw, 4.6rem); font-weight: 800; letter-spacing: -.02em; }
-.hero h1 span { color: #e7a56b; }
-.hero p { max-width: 34rem; color: var(--hero-muted); font-size: 1.1rem; margin: 0; }
-.hero .cta-row { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: .5rem; }
+.hero-photo .sticker {
+  position: absolute; left: -10px; bottom: 18px; background: var(--surface); box-shadow: var(--shadow);
+  border-radius: 16px; padding: .6rem .9rem; font-weight: 700; font-size: .95rem; display: grid; line-height: 1.25;
+}
+.hero-photo .sticker small { font-weight: 500; color: var(--muted); font-size: .8rem; }
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
   font: 700 1rem var(--font-body); border: 0; border-radius: 999px; padding: .85rem 1.4rem;
   background: var(--crust); color: var(--crust-ink); text-decoration: none; cursor: pointer;
 }
-.hero .btn { background: #e7a56b; color: #2b2118; }
-.btn:hover { filter: brightness(1.06); }
+.btn { box-shadow: 0 6px 18px rgba(232, 116, 44, .30); }
+.btn:hover { filter: brightness(1.06); transform: translateY(-1px); }
 .btn:focus-visible, .step button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
   outline: 3px solid var(--lake); outline-offset: 2px;
 }
-.btn.ghost { background: transparent; color: inherit; box-shadow: inset 0 0 0 2px currentColor; }
-.badges { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .5rem; }
-.badge { font-size: .85rem; padding: .3rem .7rem; border-radius: 999px; background: rgba(246,239,227,.1); color: var(--hero-ink); }
+.btn.ghost { background: var(--surface); color: var(--ink); box-shadow: inset 0 0 0 2px var(--line); }
+.badges { display: flex; flex-wrap: wrap; gap: .5rem; }
+.badge { font-size: .88rem; font-weight: 600; padding: .35rem .8rem; border-radius: 999px; background: var(--lake-soft); color: var(--lake); }
 
 section { padding-block: 3rem; }
 .section-head { display: grid; gap: .35rem; margin-bottom: 1.5rem; }
@@ -107,21 +109,21 @@ section { padding-block: 3rem; }
 .menu { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
 .item {
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
-  padding: 1.1rem; display: grid; grid-template-rows: auto 1fr auto; gap: .6rem; min-width: 0;
+  padding: 1.25rem; box-shadow: var(--shadow); display: grid; grid-template-rows: auto 1fr auto; gap: .6rem; min-width: 0;
 }
-.item.selected { border-color: var(--crust); box-shadow: 0 0 0 1px var(--crust); }
+.item.selected { border-color: var(--crust); box-shadow: 0 0 0 2px var(--crust), var(--shadow); }
 .item-top { display: flex; justify-content: space-between; gap: .75rem; align-items: baseline; }
 .item h4 { margin: 0; font-size: 1.08rem; font-weight: 700; }
-.price { font-weight: 700; color: var(--crust); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.price { font-weight: 700; color: var(--crust); background: var(--crust-soft); padding: .1rem .55rem; border-radius: 999px; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .item p { margin: 0; color: var(--muted); font-size: .94rem; }
 .item-foot { display: flex; justify-content: space-between; align-items: center; gap: .5rem; }
 .unit { font-size: .82rem; color: var(--muted); }
-.step { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+.step { display: inline-flex; align-items: center; background: var(--band); border-radius: 999px; overflow: hidden; }
 .step button {
   width: 2.4rem; height: 2.4rem; border: 0; background: transparent; color: var(--ink);
   font-size: 1.25rem; font-weight: 700; cursor: pointer;
 }
-.step button:hover { background: var(--lake-soft); }
+.step button:hover { background: var(--crust); color: var(--crust-ink); }
 .step output { min-width: 1.8rem; text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; }
 
 /* Order */
@@ -133,17 +135,17 @@ label { font-weight: 600; font-size: .95rem; }
 .hint { font-size: .85rem; color: var(--muted); }
 input, textarea, select {
   font: inherit; color: var(--ink); background: var(--surface);
-  border: 1px solid var(--line); border-radius: 10px; padding: .75rem .85rem; width: 100%;
+  border: 1.5px solid var(--line); border-radius: 12px; padding: .8rem .9rem; width: 100%;
 }
 textarea { min-height: 5.5rem; resize: vertical; }
 .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 @media (max-width: 480px) { .row2 { grid-template-columns: 1fr; } }
-.error { color: #b3261e; font-size: .88rem; font-weight: 600; }
+.error { color: #c0261c; font-size: .88rem; font-weight: 600; }
 :root[data-theme="dark"] .error { color: #ff8a80; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .error { color: #ff8a80; } }
 
 .ticket {
-  background: var(--surface); border: 1px dashed var(--muted); border-radius: var(--radius);
+  background: var(--band); border: 0; border-radius: var(--radius);
   padding: 1.25rem; display: grid; gap: .75rem; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 1rem);
 }
 .ticket h3 { font-size: 1.15rem; }
@@ -164,19 +166,17 @@ textarea { min-height: 5.5rem; resize: vertical; }
   background: var(--surface); border-radius: 10px; padding: .9rem; border: 1px solid var(--line);
 }
 .confirm .actions { display: flex; flex-wrap: wrap; gap: .6rem; }
-.confirm .btn.lake { background: var(--lake); color: var(--bg); }
+.confirm .btn.lake { background: var(--lake); color: var(--bg); box-shadow: none; }
 .contact-line { font-size: .92rem; color: var(--muted); }
 .contact-line strong { color: var(--ink); user-select: all; }
 
 /* About */
-.about { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 2rem; align-items: center; }
-@media (max-width: 760px) { .about { grid-template-columns: minmax(0, 1fr); } }
-.about img { border-radius: var(--radius); width: 100%; height: auto; }
-.about-text { display: grid; gap: .9rem; }
-.about-text p { margin: 0; max-width: 38rem; }
-.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .75rem; }
-.fact { border-top: 2px solid var(--crust); padding-top: .5rem; }
-.fact b { display: block; font-family: var(--font-display); font-size: 1.05rem; }
+#about { background: var(--band); }
+.about-text { display: grid; gap: .9rem; max-width: 46rem; }
+.about-text p { margin: 0; }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: .75rem; margin-top: .5rem; }
+.fact { background: var(--surface); border-radius: 16px; padding: 1rem; box-shadow: var(--shadow); }
+.fact b { display: block; font-family: var(--font-display); font-size: 1.2rem; color: var(--crust); }
 .fact span { font-size: .9rem; color: var(--muted); }
 
 footer { border-top: 1px solid var(--line); padding-block: 2rem; color: var(--muted); font-size: .9rem; }
@@ -192,18 +192,24 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 
 <header class="hero">
   <div class="wrap">
-    <div class="eyebrow">Caledonia, Michigan · Home bakery</div>
-    <h1>Bonny's <span>Sourdough</span></h1>
-    <p>Naturally leavened bread and sourdough cookies, baked in small batches for West Michigan neighbors. Pick what you want, choose a pickup day, and Bonny gets your order.</p>
-    <div class="cta-row">
-      <a class="btn" href="#menu">Start an order</a>
-      <a class="btn ghost" href="#about">Meet Bonny</a>
+    <div class="hero-text">
+      <div class="eyebrow pill-tag">Caledonia, MI · Home bakery</div>
+      <h1>Bonny's <span>Sourdough</span></h1>
+      <p>Fresh sourdough bread and cookies, baked in small batches for West Michigan neighbors. Pick your favorites, choose a pickup day, and Bonny gets your order.</p>
+      <div class="cta-row">
+        <a class="btn" href="#menu">Start an order</a>
+        <a class="btn ghost" href="#about">Meet Bonny</a>
+      </div>
+      <div class="badges">
+        <span class="badge">Pickup in Caledonia</span>
+        <span class="badge">Order 2+ days ahead</span>
+        <span class="badge">Pay at pickup</span>
+      </div>
     </div>
-    <div class="badges">
-      <span class="badge">Local pickup in Caledonia</span>
-      <span class="badge">Order 2+ days ahead</span>
-      <span class="badge">Pay at pickup</span>
-    </div>
+    <figure class="hero-photo" style="margin:0">
+      <img src="images/bonny-family.jpg" alt="Bonny and family on the Lake Michigan shore at Grand Haven, with the red lighthouse behind them" width="1000" height="1000">
+      <figcaption class="sticker">Baked with love<small>by Bonny &amp; family</small></figcaption>
+    </figure>
   </div>
 </header>
 
@@ -272,18 +278,15 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   </section>
 
   <section id="about">
-    <div class="wrap about">
-      <img src="images/bonny-family.jpg" alt="Bonny and family on the Lake Michigan shore at Grand Haven, with the red lighthouse behind them" width="1000" height="1000" loading="lazy">
-      <div class="about-text">
-        <div class="eyebrow" style="color:var(--crust)">Meet the baker</div>
-        <h2>Baked in a Caledonia family kitchen</h2>
-        <p>Bonny bakes at home in Caledonia with a sourdough starter that gets fed every single day. On days off from shaping loaves, you'll find the whole family on the Lake Michigan shore.</p>
-        <p>Every order is made fresh for you, so there's no shelf sitting and no preservatives. Just flour, water, salt, time, and a little butter and chocolate in the cookies.</p>
-        <div class="facts">
-          <div class="fact"><b>24–36 hrs</b><span>Fermentation for every loaf</span></div>
-          <div class="fact"><b>3 ingredients</b><span>Flour, water, salt in the country loaf</span></div>
-          <div class="fact"><b>West Michigan</b><span>Pickup in Caledonia, MI 49316</span></div>
-        </div>
+    <div class="wrap about-text">
+      <div class="eyebrow" style="color:var(--crust)">Meet the baker</div>
+      <h2 style="font-size:clamp(1.8rem,5vw,2.5rem)">Baked in a Caledonia family kitchen</h2>
+      <p>Bonny bakes at home in Caledonia with a sourdough starter that gets fed every single day. On days off from shaping loaves, you'll find the whole family on the Lake Michigan shore.</p>
+      <p>Every order is made fresh for you, so there's no shelf sitting and no preservatives. Just flour, water, salt, time, and a little butter and chocolate in the cookies.</p>
+      <div class="facts">
+        <div class="fact"><b>24–36 hrs</b><span>Fermentation for every loaf</span></div>
+        <div class="fact"><b>3 ingredients</b><span>Flour, water, salt in the country loaf</span></div>
+        <div class="fact"><b>West Michigan</b><span>Pickup in Caledonia, MI 49316</span></div>
       </div>
     </div>
   </section>
